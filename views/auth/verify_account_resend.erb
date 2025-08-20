@@ -1,0 +1,28 @@
+<% @page_title = "Resend Verification" %>
+
+<% @page_message = "Resend account verification" %>
+
+<form action="<%= rodauth.verify_account_resend_path %>" class="rodauth space-y-6" role="form" method="POST">
+  <%== rodauth.verify_account_resend_additional_form_tags %>
+  <%== rodauth.csrf_tag(rodauth.verify_account_resend_path) %>
+  <% recently_sent = rodauth.verify_account_email_recently_sent? if rodauth.account %>
+
+  <% if !rodauth.account || recently_sent %>
+    <div class="leading-6 text-sm"><%== rodauth.verify_account_resend_explanatory_text %></div>
+  <% end %>
+
+  <% if rodauth.param_or_nil(rodauth.login_param) %>
+    <%== part("components/form/hidden", name: rodauth.login_param, value: rodauth.param(rodauth.login_param)) %>
+  <% else %>
+    <%== render("components/rodauth/login_field") %>
+  <% end %>
+
+  <div class="flex flex-col text-center">
+    <%== part(
+      "components/form/submit_button",
+      text: "Send Verification Again",
+      attributes: recently_sent ? { disabled: true } : {}
+    ) %>
+    <a href="/login" class="mt-2 text-sm font-semibold leading-6 text-gray-900">Sign in to another account</a>
+  </div>
+</form>

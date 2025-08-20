@@ -1,0 +1,8 @@
+<%== part(
+  "components/tabbar",
+  tabs: [
+    ["Inference Endpoints", @project_data[:path] + "/inference-endpoint"],
+    ["Inference API Keys", @project_data[:path] + "/inference-api-key"],
+    ["Playground", @project_data[:path] + "/inference-playground"]
+  ]
+) %>
